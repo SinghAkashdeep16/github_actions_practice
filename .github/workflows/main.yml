@@ -18,6 +18,6 @@ jobs:
       - name: list files
         run: ls 
       - name: os version
-        run: os --version
+        run: cat /etc/os-release
         
         
