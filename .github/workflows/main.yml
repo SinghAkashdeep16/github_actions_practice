@@ -7,5 +7,7 @@ jobs:
   greet:
     runs-on: ubuntu-latest
     steps:
-      - name: "say hello to user"
-        run: "echo hello world"
+      - name: checkout code
+        uses: actions/checkout@v4
+      - name: print hello
+        run: echo "Hello from GitHub Actions!"
