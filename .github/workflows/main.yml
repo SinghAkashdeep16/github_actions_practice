@@ -17,4 +17,7 @@ jobs:
         run: echo ${{ github.ref_name }}
       - name: list files
         run: ls 
+      - name: os version
+        run: os --version
+        
         
