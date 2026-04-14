@@ -16,5 +16,5 @@ jobs:
       - name: Branch name
         run: echo ${{ github.ref_name }}
       - name: list files
-        run: echo " $ls "
+        run: ls 
         
