@@ -11,3 +11,10 @@ jobs:
         uses: actions/checkout@v4
       - name: print hello
         run: echo "Hello from GitHub Actions!"
+      - name: print date and time
+        run: date
+      - name: Branch name
+        run: $git branch
+      - name: list files
+        run: $ls
+        
