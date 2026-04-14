@@ -1,7 +1,7 @@
 name: "hello-worklow"
 on:
-  push
-    branches[main]
+  push:
+    - main
 jobs:
   greet:
     runs-on: ubuntu-latest
