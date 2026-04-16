@@ -9,5 +9,5 @@ jobs:
   check_pr:                 
     runs-on: ubuntu-latest  
     steps:                 
-      - name: "check pr status"   
+      - name: "check pr status and run tests"   
         run: echo "running pr checks ${{ github.ref_name }}"
