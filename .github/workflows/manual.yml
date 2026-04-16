@@ -1,4 +1,5 @@
 name: "Manual Deploy"
+
 on:
   workflow_dispatch:
     inputs:
@@ -10,9 +11,11 @@ on:
         options:
           - staging
           - production
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    environment: ${{ inputs.environment }}
     steps:
       - name: "Print environment input"
-        run: echo "Deploying to environment: ${{ github.event.inputs.environment }}"
+        run: echo "Deploying to environment: ${{ inputs.environment }}"
