@@ -1,1 +1,13 @@
+name: "pr checks"
 
+on:
+  pull_request:
+    types: [opened]
+    branches: [main]       
+
+jobs:                       
+  check_pr:                 
+    runs-on: ubuntu-latest  
+    steps:                 
+      - name: "check pr"   
+        run: echo "running pr checks ${{ github.ref_name }}"
