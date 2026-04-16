@@ -1,10 +1,9 @@
 name: "pr checks"
 
 on:
-  pull_request:
-    types: [opened]
-    branches: [main]       
-
+   schedule:
+     - cron: 0 0 * * *    
+   
 jobs:                       
   check_pr:                 
     runs-on: ubuntu-latest  
