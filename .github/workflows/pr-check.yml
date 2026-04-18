@@ -6,7 +6,10 @@ on:
       environment: 
         description: "choose environment (staging/prodcution)" 
         required: true
-        default: "staging"
+        type: choice
+        options:
+          - staging
+          - production
         
 jobs:                       
   print_input:                 
