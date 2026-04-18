@@ -10,7 +10,7 @@ jobs:
          python-version: [ '3.10' , '3.11' , '3.12' ]
     steps:           
       - name: set up python versions
-        uses: actions/python-version@v4
+        uses: actions/github_actions_practice@v4
         with:
           python-version: ${{ matrix.python-version }}
 
