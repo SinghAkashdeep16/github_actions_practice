@@ -2,18 +2,17 @@ name: "pr checks"
 
 on:
   workflow_dispatch:
-    inputs:
-      environment: 
-        description: "choose environment (staging/prodcution)" 
-        required: true
-        type: choice
-        options:
-          - staging
-          - production
-        
 jobs:                       
   print_input:                 
     runs-on: ubuntu-latest  
-    steps:                 
-      - name: "printed selected env"   
-        run: echo "Environment is ${{ github.event.inputs.environment }}"
+    strategy:
+       matrix:
+         python-version: [ 3.10, 3.11, 3.12]
+    steps:           
+      - name: set up python versions
+        uses: actions/python-version@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: print python version
+        run: python --version
