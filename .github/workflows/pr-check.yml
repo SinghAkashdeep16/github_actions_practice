@@ -1,0 +1,16 @@
+name: "pr checks"
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment: 
+        description: "choose environment (staging/prodcution)" 
+        required: true
+        default: "staging"
+        
+jobs:                       
+  print_input:                 
+    runs-on: ubuntu-latest  
+    steps:                 
+      - name: "printed selected env"   
+        run: echo "Environment is ${{ github.event.inputs.environment }}"
