@@ -8,11 +8,13 @@ jobs:
     strategy:
        matrix:
          python-version: [ '3.10' , '3.11' , '3.12' ]
+         exclude:
+         - python-version: 3.10
     steps:           
       - name: set up python versions
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python-version }}
-
+         
       - name: print python version
         run: python --version
