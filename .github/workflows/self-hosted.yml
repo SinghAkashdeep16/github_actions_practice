@@ -14,6 +14,14 @@ jobs:
         run:  hostname
       - name:  " The current user running the job "
         run:  whoami
+      - name: "docker version"
+        run: docker --version
+      - name: "python version"
+        run: python--version
+      - name: "node version"
+        run: node --verison
+      - name: "git version"
+        run: git --version
   mac-os:
     runs-on: macos-latest
     steps:
