@@ -6,7 +6,7 @@ on:
       - main
 jobs:
   ubuntu-os:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     steps:
       - name: "check os name"
         run: echo  $RUNNER_OS
