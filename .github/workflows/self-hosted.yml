@@ -17,7 +17,7 @@ jobs:
       - name: "docker version"
         run: docker --version
       - name: "python version"
-        run: python--version
+        run: python --version
       - name: "node version"
         run: node --verison
       - name: "git version"
