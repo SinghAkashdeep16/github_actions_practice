@@ -8,6 +8,8 @@ jobs:
   ubuntu-os:
     runs-on: self-hosted
     steps:
+      - name: "updfate ubuntu"
+        run: apt-get update -y
       - name: "check os name"
         run: echo  $RUNNER_OS
       - name: Print hostname
