@@ -7,7 +7,7 @@ on:
 
 jobs:
   ubuntu-os:
-    runs-on: self-hosted
+    runs-on: [self-hosted , my-linux-runner]
     steps:
       - name: "Print hostname"
         run: hostname
