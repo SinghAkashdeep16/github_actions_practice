@@ -13,7 +13,8 @@ jobs:
         run: hostname
       - name: "print the working directory"
         run: pwd
-      - name: "create a file"
-        run: touch hello.txt
-
+      - name: Create a file
+        run: echo "Hello from self-hosted runner" > hello.txt
+      - name: Verify file in runner
+        run: ls -l
 
