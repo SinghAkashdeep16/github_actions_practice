@@ -19,7 +19,7 @@ jobs:
       - name: "python version"
         run: python --version
       - name: "node version"
-        run: node --verison
+        run: node --version
       - name: "git version"
         run: git --version
   mac-os:
