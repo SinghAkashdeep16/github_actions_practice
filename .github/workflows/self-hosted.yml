@@ -9,29 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: "check os name"
-        run:  $RUNNER_OS
+        run: echo  $RUNNER_OS
       - name: Print hostname
-        run: hostname
+        run:  hostname
       - name:  " The current user running the job "
-        run: $whoami
+        run: echo $whoami
   mac-os:
     runs-on: macos-latest
     steps:
       - name: "check os name"
-        run:  $RUNNER_OS
+        run:  echo $RUNNER_OS
       - name: Print hostname
-        run: hostname
+        run:  hostname
       - name:  " The current user running the job "
-        run: $whoami
+        run: echo $whoami
   windows-os:
     runs-on: macos-latest
     steps:
       - name: "check os name"
-        run:  $RUNNER_OS
+        run:  echo $RUNNER_OS
       - name: Print hostname
         run: hostname
       - name:  " The current user running the job "
-        run: $whoami
+        run: echo $whoami
   
 
   
