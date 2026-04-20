@@ -1,1 +1,19 @@
+name: self-hosted-workflows
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ubuntu-os:
+    runs-on: self-hosted
+    steps:
+      - name: "Print hostname"
+        run: hostname
+      - name: "print the working directory"
+        run: pwd
+      - name: "create a file"
+        run: touch hello.txt
+
 
