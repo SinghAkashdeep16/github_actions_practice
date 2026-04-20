@@ -13,7 +13,7 @@ jobs:
       - name: Print hostname
         run:  hostname
       - name:  " The current user running the job "
-        run:  $whoami
+        run:  whoami
   mac-os:
     runs-on: macos-latest
     steps:
@@ -22,7 +22,7 @@ jobs:
       - name: Print hostname
         run:  hostname
       - name:  " The current user running the job "
-        run:  $whoami
+        run:  whoami
   windows-os:
     runs-on: macos-latest
     steps:
@@ -31,7 +31,7 @@ jobs:
       - name: Print hostname
         run: hostname
       - name:  " The current user running the job "
-        run:  $whoami
+        run:  whoami
   
 
   
