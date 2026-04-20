@@ -1,1 +1,38 @@
 
+name: "self-hosted-workflows"
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  ubuntu-os:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "check os name"
+        run:  $RUNNER_OS
+      - name: Print hostname
+        run: hostname
+      - name:  " The current user running the job "
+        run: $whoami
+  mac-os:
+    runs-on: macos-latest
+    steps:
+      - name: "check os name"
+        run:  $RUNNER_OS
+      - name: Print hostname
+        run: hostname
+      - name:  " The current user running the job "
+        run: $whoami
+  windows-os:
+    runs-on: macos-latest
+    steps:
+      - name: "check os name"
+        run:  $RUNNER_OS
+      - name: Print hostname
+        run: hostname
+      - name:  " The current user running the job "
+        run: $whoami
+  
+
+  
+
