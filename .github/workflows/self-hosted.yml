@@ -1,48 +1,58 @@
+name: self-hosted-workflows
 
-name: "self-hosted-workflows"
-on: 
+on:
   push:
     branches:
       - main
+
 jobs:
   ubuntu-os:
     runs-on: self-hosted
     steps:
-      - name: "updfate ubuntu"
+      - name: Update ubuntu
         run: sudo apt-get update -y
-      - name: "check os name"
-        run: echo  $RUNNER_OS
+
+      - name: Check os name
+        run: echo $RUNNER_OS
+
       - name: Print hostname
-        run:  hostname
-      - name:  " The current user running the job "
-        run:  whoami
-      - name: "docker version"
+        run: hostname
+
+      - name: The current user running the job
+        run: whoami
+
+      - name: Docker version
         run: docker --version
-      - name: "python version"
-        run: python --version
-      - name: "node version"
+
+      - name: Python version
+        run: python3 --version
+
+      - name: Node version
         run: node --version
-      - name: "git version"
+
+      - name: Git version
         run: git --version
+
   mac-os:
     runs-on: macos-latest
     steps:
-      - name: "check os name"
-        run:  echo $RUNNER_OS
-      - name: Print hostname
-        run:  hostname
-      - name:  " The current user running the job "
-        run:  whoami
-  windows-os:
-    runs-on: macos-latest
-    steps:
-      - name: "check os name"
-        run:  echo $RUNNER_OS
+      - name: Check os name
+        run: echo $RUNNER_OS
+
       - name: Print hostname
         run: hostname
-      - name:  " The current user running the job "
-        run:  whoami
-  
 
-  
+      - name: The current user running the job
+        run: whoami
 
+  windows-os:
+    runs-on: windows-latest
+    steps:
+      - name: Check os name
+        run: echo $env:RUNNER_OS
+
+      - name: Print hostname
+        run: hostname
+
+      - name: The current user running the job
+        run: whoami
