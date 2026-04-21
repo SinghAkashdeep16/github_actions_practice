@@ -1,0 +1,30 @@
+name: "multi-job"
+on: 
+  push:
+    branches:
+      - main
+jobs:
+  build:
+  
+    runs-on: ubuntu-latest
+    steps:
+      - name: "build stage"
+        run: echo "${{ github.action_ref.name}}"
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - name: "test stage"
+        run: echo "${{ github.action_ref.name}}"
+  deploy:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: "deploy stage"
+        run: echo "${{ github.action_ref.name}}"
+        
+    
+     
+    
+  
+
