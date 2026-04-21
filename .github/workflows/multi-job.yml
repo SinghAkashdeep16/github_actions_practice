@@ -22,7 +22,8 @@ jobs:
           echo "App: $APP_NAME"
           echo "Env: $ENVIRONMENT"
           echo "Version: $VERSION"
-
+          echo "COMMIT SHA: ${{ github.sha }}"
+          echo "ACTOR: ${{ github.actor }}"
   # test:
   #   needs: build
   #   runs-on: ubuntu-latest
