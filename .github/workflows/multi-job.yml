@@ -1,25 +1,23 @@
+---
 name: smart-pipeline
-
 on:
-  push:
-
+  push: null
 jobs:
   lint:
     runs-on: ubuntu-latest
     steps:
       - name: Run lint
         run: echo "Lint job running"
-
   test:
     runs-on: ubuntu-latest
     steps:
       - name: Run test
         run: echo "Test job running"
-
   summary:
     runs-on: ubuntu-latest
-    
-    needs: [lint, test]
+    needs:
+      - lint
+      - test
     steps:
       - name: Print branch type
         run: |
@@ -28,6 +26,5 @@ jobs:
           else
             echo "This is a feature branch push"
           fi
-
       - name: Print commit message
-        run: echo "Commit message: ${{ github.event.head_commit.message }}"
+        run: 'echo "Commit message: ${{ github.event.head_commit.message }}"'
