@@ -1,59 +1,63 @@
-name: multi-job
+name: "multi-job"
 
 on:
   push:
     branches:
-      - main
+      - "main"
 
 jobs:
-  main-check:
-    runs-on: ubuntu-latest
+  build:
+    runs-on: "ubuntu-latest"
     outputs:
-      my_value: ${{ steps.step1.outputs.date }}
+      my_value: "${{ steps.step1.outputs.date }}"
 
     steps:
-      - name: create output
-        id: step1
-        if: ${{ github.ref_name == 'main' }}
-        run: echo "date=$(date)" >> $GITHUB_OUTPUT
-
-      - name: print output in same job
-        run: echo "Date is ${{ steps.step1.outputs.date }}"
+      - name: "Create output"
+        id: "step1"
+        run: 'echo "date=$(date)" >> $GITHUB_OUTPUT'
 
   usage:
-    runs-on: ubuntu-latest
-    needs: main-check
+    runs-on: "ubuntu-latest"
+    needs: "build"
 
     steps:
-      - name: print output from previous job
-        run: echo "Output from main-check: ${{ needs.main-check.outputs.my_value }}"
+      - name: "Print output from previous job"
+        run: 'echo "${{ needs.build.outputs.my_value }}"'
 
-  fail-check:
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: step 1 will fail
-        run: exit 1
-
-      - name: run only if previous step failed
-        if: ${{ failure() }}
-        run: echo "Previous step failed!"
-
-  push-check:
-    runs-on: ubuntu-latest
+  main_check:
+    runs-on: "ubuntu-latest"
 
     steps:
-      - name: run only on push
-        if: ${{ github.event_name == 'push' }}
-        run: echo "This runs only on push events"
+      - name: "Run only on main branch"
+        if: "${{ github.ref_name == 'main' }}"
+        run: 'echo "This step runs only on main branch"'
 
-  continue-error-check:
-    runs-on: ubuntu-latest
+  fail_check:
+    runs-on: "ubuntu-latest"
 
     steps:
-      - name: step that may fail
+      - name: "Step 1 will fail"
+        run: "exit 1"
+
+      - name: "Run only if previous step failed"
+        if: "${{ failure() }}"
+        run: 'echo "Previous step failed!"'
+
+  push_check:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Run only on push"
+        if: "${{ github.event_name == 'push' }}"
+        run: 'echo "This runs only on push events"'
+
+  continue_error_check:
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: "Step that may fail"
         continue-on-error: true
-        run: exit 1
+        run: "exit 1"
 
-      - name: next step
-        run: echo "Workflow continues"
+      - name: "Next step"
+        run: 'echo "Workflow continues"'
