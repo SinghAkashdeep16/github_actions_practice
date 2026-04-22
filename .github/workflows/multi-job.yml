@@ -1,63 +1,35 @@
-name: "multi-job"
-
+---
+name: multi-job
 on:
   push:
     branches:
-      - "main"
-
+      - main
+  pull_request:
+    branches:
+      - main
 jobs:
-  build:
-    runs-on: "ubuntu-latest"
-    outputs:
-      my_value: "${{ steps.step1.outputs.date }}"
-
+  conditional-demo:
+    runs-on: ubuntu-latest
     steps:
-      - name: "Create output"
-        id: "step1"
-        run: 'echo "date=$(date)" >> $GITHUB_OUTPUT'
-
-  usage:
-    runs-on: "ubuntu-latest"
-    needs: "build"
-
+      - name: Run only on main branch
+        if: ${{ github.ref_name == 'main' }}
+        run: echo "This step runs only on the main branch"
+      - name: Step that fails
+        run: exit 1
+      - name: Run only if previous step failed
+        if: ${{ failure() }}
+        run: echo "Previous step failed"
+  push-only-job:
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
     steps:
-      - name: "Print output from previous job"
-        run: 'echo "${{ needs.build.outputs.my_value }}"'
-
-  main_check:
-    runs-on: "ubuntu-latest"
-
+      - name: Run only on push
+        run: echo "This job runs only for push events"
+  continue-error-demo:
+    runs-on: ubuntu-latest
     steps:
-      - name: "Run only on main branch"
-        if: "${{ github.ref_name == 'main' }}"
-        run: 'echo "This step runs only on main branch"'
-
-  fail_check:
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Step 1 will fail"
-        run: "exit 1"
-
-      - name: "Run only if previous step failed"
-        if: "${{ failure() }}"
-        run: 'echo "Previous step failed!"'
-
-  push_check:
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Run only on push"
-        if: "${{ github.event_name == 'push' }}"
-        run: 'echo "This runs only on push events"'
-
-  continue_error_check:
-    runs-on: "ubuntu-latest"
-
-    steps:
-      - name: "Step that may fail"
+      - name: Step that may fail
         continue-on-error: true
-        run: "exit 1"
-
-      - name: "Next step"
-        run: 'echo "Workflow continues"'
+        run: exit 1
+      - name: Next step
+        run: echo "Workflow continues even though the previous step failed"
