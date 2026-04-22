@@ -5,26 +5,40 @@ on:
     branches:
       - main
 
-env:
-  APP_NAME: myapp
+# env:
+#   APP_NAME: myapp
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      ENVIRONMENT: staging
+    outputs:
+      my_value: ${{ steps.step1.outputs.date }}
 
     steps:
-      - name: "build stage"
-        env:
-          VERSION: 1.0.0
-        run: |
-          echo "App: $APP_NAME"
-          echo "Env: $ENVIRONMENT"
-          echo "Version: $VERSION"
-          echo "COMMIT SHA: ${{ github.sha }}"
-          echo "ACTOR: ${{ github.actor }}"
-  # test:
+      - name: "create output"
+        id: step1
+        run: echo " date=$(date) " >> $GITHUB_OUTPUT
+  usage:
+    
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+      - name: "print output"
+        run: echo "${{ needs.build.outputs.my_value }}"
+    # env:
+    #   ENVIRONMENT: staging
+
+  #   steps:
+  #     - name: "build stage"
+  #       env:
+  #         VERSION: 1.0.0
+  #       run: |
+  #         echo "App: $APP_NAME"
+  #         echo "Env: $ENVIRONMENT"
+  #         echo "Version: $VERSION"
+  #         echo "COMMIT SHA: ${{ github.sha }}"
+  #         echo "ACTOR: ${{ github.actor }}"
+  # # test:
   #   needs: build
   #   runs-on: ubuntu-latest
 
