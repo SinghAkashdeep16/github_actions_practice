@@ -17,7 +17,7 @@ jobs:
     steps:
       - name: "create output"
         id: step1
-        run: echo " date=$(date) " >> $GITHUB_OUTPUT
+        run: echo "date=$(date)" >> $GITHUB_OUTPUT
   usage:
     
       runs-on: ubuntu-latest
