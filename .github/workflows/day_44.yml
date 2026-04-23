@@ -15,6 +15,13 @@ jobs:
       - name: print secret message
         run: |    
           echo "$TOKEN" | docker login -u "$USERNAME" --password-stdin
+      - name: Create artifact file
+        run: docker --version > docker-info.txt
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: workflow-output
+          path: docker-info.txt
         # run: |
         #   if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
         #     echo "The secret is set: true"
