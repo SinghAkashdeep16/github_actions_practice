@@ -1,4 +1,4 @@
-name: "passing test run in CI"
+name: "Run Script with Cache"
 
 on:
   push:
@@ -10,10 +10,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: cache
-        uses: actions/cache@v4
       - name: Checkout code
         uses: actions/checkout@v4
+
+      - name: Cache files
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache
+          key: cache-${{ runner.os }}
 
       - name: Make script executable
         run: chmod +x .github/workflows/script.sh
