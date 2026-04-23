@@ -36,7 +36,8 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: workflow-output
+          path: downloaded
 
       - name: Print artifact contents
         run: |
-          cat workflow-output/docker-info.txt
+          cat downloaded/docker-info.txt
