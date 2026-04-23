@@ -22,6 +22,8 @@ jobs:
         with:
           name: workflow-output
           path: docker-info.txt
+      - name: download artifact
+        uses: actions/download-artifact@v4
         # run: |
         #   if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
         #     echo "The secret is set: true"
