@@ -1,11 +1,10 @@
-print("Running simple CI test...")
+#!/bin/bash
+echo "Running simple CI test..."
 
-x = 5
-y = 2
-
-if x > y:
-    print("Test passed")
-    exit(0)
-else:
-    print("Test failed")
-    exit(1)
+if [ 2 -gt 1 ]; then
+  echo "Test passed"
+  exit 0
+else
+  echo "Test failed"
+  exit 1
+fi
