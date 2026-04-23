@@ -1,18 +1,19 @@
 name: "passing test run in CI"
+
 on:
   push:
     branches:
       - main
+
 jobs:
   print_secret:
     runs-on: ubuntu-latest
     
     steps:
       - name: print secret message
-       
-        run: | 
-          if[ -n "${{ secrets.MY_SECRET_MESSAGE }}"]; then
+        run: |
+          if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
             echo "The secret is set: true"
-          else:
-            echo "he secret is set: false"
+          else
+            echo "The secret is set: false"
           fi
