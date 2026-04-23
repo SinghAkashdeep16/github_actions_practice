@@ -11,9 +11,10 @@ jobs:
     
     steps:
       - name: print secret message
-        run: |
-          if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
-            echo "The secret is set: true"
-          else
-            echo "The secret is set: false"
-          fi
+        run: echo "${{ secrets.MY_SECRET_MESSAGE }}"
+        # run: |
+        #   if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
+        #     echo "The secret is set: true"
+        #   else
+        #     echo "The secret is set: false"
+        #   fi
