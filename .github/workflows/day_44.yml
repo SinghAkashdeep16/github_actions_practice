@@ -6,27 +6,37 @@ on:
       - main
 
 jobs:
-  print_secret:
+  job1:
     runs-on: ubuntu-latest
     env:
-      USERNAME: "${{ secrets.DOCKER_USERNAME }}"
-      TOKEN: "${{ secrets.DOCKER_TOKEN }}"
+      USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      TOKEN: ${{ secrets.DOCKER_TOKEN }}
+
     steps:
-      - name: print secret message
-        run: |    
+      - name: Login to Docker
+        run: |
           echo "$TOKEN" | docker login -u "$USERNAME" --password-stdin
+
       - name: Create artifact file
-        run: docker --version > docker-info.txt
+        run: |
+          docker --version > docker-info.txt
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: workflow-output
           path: docker-info.txt
-      - name: download artifact
+
+  job2:
+    runs-on: ubuntu-latest
+    needs: job1
+
+    steps:
+      - name: Download artifact
         uses: actions/download-artifact@v4
-        # run: |
-        #   if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
-        #     echo "The secret is set: true"
-        #   else
-        #     echo "The secret is set: false"
-        #   fi
+        with:
+          name: workflow-output
+
+      - name: Print artifact contents
+        run: |
+          cat workflow-output/docker-info.txt
