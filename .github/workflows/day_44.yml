@@ -11,7 +11,7 @@ jobs:
     steps:
     
       - name: checkout code
-        uses: actions/checkout-code@v4
+        uses: actions/checkout@v4
 
       - name: install dependencies
         run: pip install python
