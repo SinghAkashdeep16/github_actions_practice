@@ -8,10 +8,13 @@ on:
 jobs:
   print_secret:
     runs-on: ubuntu-latest
-    
+    env:
+      USERNAME: "${{ secrets.DOCKER_USERNAME }}"
+      TOKEN: "${{ secrets.DOCKER_TOKEN }}"
     steps:
       - name: print secret message
-        run: echo "${{ secrets.MY_SECRET_MESSAGE }}"
+        run: |    
+          echo "$TOKEN" | docker login -u "$USERNAME" --password-stdin
         # run: |
         #   if [ -n "${{ secrets.MY_SECRET_MESSAGE }}" ]; then
         #     echo "The secret is set: true"
