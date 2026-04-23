@@ -1,1 +1,12 @@
-
+name: "passing test run in CI"
+on:
+  push:
+    branches:
+      - main
+jobs:
+  print_secret:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: print secret message"
+        run: echo "${{ secrets.MY_SECRET_MESSAGE }}"
