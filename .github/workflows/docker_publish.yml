@@ -1,4 +1,4 @@
-name: dockerizing application
+﻿name: dockerizing application
 on:
   push:
     branches:
@@ -13,7 +13,7 @@ jobs:
       - name: Login to docker hub
         uses: docker/login-action@v3
         with:
-          username: ${{ vars.DOCKER_USERNAME }}
+          username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Set up docker buildx
