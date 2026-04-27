@@ -1,0 +1,41 @@
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    networks:
+      - custom_network
+    env_file:
+      - .env
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000"]
+      interval: 1m30s
+      timeout: 30s
+      retries: 5
+      start_period: 30s
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tododb
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    networks:
+      - custom_network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "admin", "-d", "tododb"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 30s
+volumes:
+  db_data:
+       
+networks:
+  custom_network:
+      driver: bridge

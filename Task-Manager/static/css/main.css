@@ -1,0 +1,80 @@
+body{
+    margin: 10;
+    font-family: sans-serif;
+    text-align: center;
+   
+}
+content {
+    text-align: center;
+}
+table {
+    border-collapse: collapse;
+    width: 80%; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the table horizontally */
+}
+
+th, td {
+    border: 1px solid #ddd; /* Add borders to separate columns and rows */
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2; /* Add a background color for header cells */
+}
+
+td a {
+    text-decoration: none;
+    margin: 2px;
+    padding: 2px 6px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+}
+
+td a:hover {
+    background-color:	#8f888868; /* Change background color on hover */
+    color: #fff;
+}
+.task-input {
+    width: 300px;
+    padding: 10px;
+    font-size: 16px;
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+.task-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #070707be; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.button-container {
+    display: inline-block;
+    margin-right: 10px;
+}
+.delete-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #ff5733; /* Red background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* Style the update button */
+.update-button {
+    padding: 5px 10px;
+    font-size: 14px;
+    background-color: #007bff; /* Blue background color */
+    color: #fff; /* White text color */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+   
+}
