@@ -24,4 +24,4 @@ jobs:
         with:
           context: Task-Manager
           push: true
-          tags: akashjaura16/task-manager:latest
+          tags: ${{ vars.DOCKER_USERNAME }}/task-manager:latest
