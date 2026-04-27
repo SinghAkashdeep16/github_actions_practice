@@ -1,0 +1,23 @@
+name: dockerizing application
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  docker:
+  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to docker hub
+        uses: docker/login-actions@v4
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+      - name: set up docker build
+        uses: docker/setup-buildx-actions@v4
+      - name: Build and push:
+        uses: docker/build-push-actions@v7
+        with:
+          tags: user/app:latest
+          
