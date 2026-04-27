@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: set up docker build
         uses: docker/setup-buildx-actions@v4
-      - name: Build and push:
+      - name: Build and push
         uses: docker/build-push-actions@v7
         with:
           tags: user/app:latest
