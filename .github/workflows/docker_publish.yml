@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - feature/**
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -18,6 +19,14 @@ jobs:
 
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v3
+
+      - name: Build only
+        if: github.ref_name != 'main'
+        uses: docker/build-push-action@v6
+        with:
+          context: Task-Manager
+          push: false
+          tags: ${{ vars.DOCKER_USERNAME }}/task-manager:latest
 
       - name: Build and push
         if: github.ref_name == 'main'
