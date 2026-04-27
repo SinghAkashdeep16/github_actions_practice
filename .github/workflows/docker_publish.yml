@@ -24,4 +24,6 @@ jobs:
         with:
           context: Task-Manager
           push: true
-          tags: ${{ vars.DOCKER_USERNAME }}/task-manager:latest
+          tags: |
+            ${{ vars.DOCKER_USERNAME }}/task-manager:latest
+            ${{ vars.DOCKER_USERNAME }}/task-manager:sha-${{ github.sha }}
