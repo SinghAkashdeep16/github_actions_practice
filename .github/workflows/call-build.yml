@@ -9,7 +9,7 @@ jobs:
   build:
     uses: ./.github/workflows/reusable-build.yml
     with:
-      app-name: "my-web-app"
+      app_name: "my-web-app"
       environment: "production"
     secrets:
       docker_token: ${{ secrets.DOCKER_TOKEN }}
@@ -18,6 +18,6 @@ jobs:
     needs: [build]
     steps:
       - name: print build version
-        run: echo "Build version is ${{ needs.build.outputs.build-version }}"
+        run: echo "Build version is ${{ needs.build.outputs.build_version }}"
     
 
