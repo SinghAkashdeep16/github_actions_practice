@@ -23,7 +23,17 @@ runs:
       run: |
         if [ "${{ inputs.language }}" = "en" ]; then
           echo "Hello, ${{ inputs.name }}!"
-        elif [ "${{ inputs.language }}" = "es" ]; then
-          echo "Hola, ${{ inputs.name }}!"
-        elif [ "${{ inputs.language }}" = "fr" ]; then
-          e
+        else
+          echo "Hello, ${{ inputs.name }}! (unknown language: ${{ inputs.language }})"
+        fi
+
+    - name: Print date and runner OS
+      shell: bash
+      run: |
+        echo "Current date: $(date)"
+        echo "Runner OS: ${{ runner.os }}"
+
+    - name: Set greeted output
+      id: set_output
+      shell: bash
+      run: echo "greeted=true" >> $GITHUB_OUTPUT
