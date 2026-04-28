@@ -1,0 +1,29 @@
+name: Custom Composite Action
+description: Prints a greeting message
+
+inputs:
+  name:
+    description: "Name of the person to greet"
+    required: true
+  language:
+    description: "Language for greeting"
+    required: false
+    default: en
+
+outputs:
+  greeted:
+    description: "Whether the greeting was printed"
+    value: ${{ steps.set_output.outputs.greeted }}
+
+runs:
+  using: composite
+  steps:
+    - name: Print greeting
+      shell: bash
+      run: |
+        if [ "${{ inputs.language }}" = "en" ]; then
+          echo "Hello, ${{ inputs.name }}!"
+        elif [ "${{ inputs.language }}" = "es" ]; then
+          echo "Hola, ${{ inputs.name }}!"
+        elif [ "${{ inputs.language }}" = "fr" ]; then
+          e
