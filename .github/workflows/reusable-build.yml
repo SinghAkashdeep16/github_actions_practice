@@ -12,11 +12,21 @@ on:
     secrets:
        docker_token:
          required: true
-
+    outputs:
+      build-version: 
+        description: "tHE generated build version string"
+        value: ${{ jobs.checkout_code.outputs.build-version }}
 jobs:
   checkout_code: 
     runs-on: ubuntu-latest
+    outputs:
+      build-version: ${{ steps.version.outputs.build-version }}
+      
     steps:
+      - name: generate the version string
+        id: version
+        run: echo "build_version=v1.0-${{ github.sha }}" >> $GITHUB_OUTPUT
+        
       - name: Checkout code
         uses: actions/checkout@v4
       - name: print the app_name for environment
