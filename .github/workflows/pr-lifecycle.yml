@@ -22,8 +22,6 @@ jobs:
                 echo "Source Branch : ${{ github.head_ref }}"
                 echo "Current Branch : ${{ github.ref_name }}"
             - name: ONLY RUNS WHEN PR IS MERGED
-              run: |
-                if [ ${{ github.event.pull_request.merged }} == "true" ]; then
-                    echo "this code is fine"
-                else
-                    exit 1
+              if: github.event.pull_request.merged == true
+              run: echo "step is working "
+                
