@@ -8,13 +8,16 @@ jobs:
     file-size-check:
         runs-on: ubuntu-latest
         steps:
-            - name: checkouts code
+            - name: Checkout code
               uses: actions/checkout@v4
             - name: Fails if file > 1 mb
-              uses: ./
-              with:
-                max_size: 1048576
-                fail_on_large_files: 'true'
+              run: |
+                find . -size +1M -not -path './.git/*' > large_files.txt
+                if [ -s large_files.txt ]; then
+                    echo "Files larger than 1MB found:"
+                    cat large_files.txt
+                    exit 1
+                fi
     branch-name-check:
         runs-on: ubuntu-latest
         steps: 
