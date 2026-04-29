@@ -1,0 +1,11 @@
+name: Run Tests  
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run tests
+        run: echo "test completed"
