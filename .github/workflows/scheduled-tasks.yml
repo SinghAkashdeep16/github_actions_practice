@@ -1,0 +1,21 @@
+name: scheduled trigger
+
+on: 
+    workflow_dispatch:
+    schedule:
+        - cron: '30 2 * * 1'
+        - cron: '0 */6 * * *'
+
+jobs:
+    sechulder:
+        runs-on: ubuntu-latest
+        steps:
+            - name: print which schedule is triggered
+              run: echo "${{ github.event.schedule }}"
+            - name: health checks
+              run: |
+                response=$(curl -o /dev/null -s -w "%{http_code}" https://google.com)
+                if [ "$response" -ne 200 ]; then
+                    echo "Health check failed: $response"
+                    exit 1
+                fi
