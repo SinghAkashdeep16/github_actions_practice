@@ -20,4 +20,10 @@ jobs:
             - name: Print source and current branch
               run: |
                 echo "Source Branch : ${{ github.head_ref }}"
-                echo "Current Branch : ${GITHUB_REF##*/}"
+                echo "Current Branch : ${{ github.ref_name }}"
+            - name: ONLY RUNS WHEN PR IS MERGED
+              run: |
+                if [ ${{ github.event.pull_request.merged }} == "true"]; then
+                    echo "this code is fine"
+                else
+                    exit 1
