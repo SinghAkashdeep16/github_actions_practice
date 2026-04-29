@@ -1,0 +1,20 @@
+name: PR Lifecycle
+on:
+    pull_request:
+        types: [opened, synchronize, reopened, closed]
+jobs:
+    pr-lifecycle:
+        runs-on: ubutnu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+            - name: PR Lifecycle
+              run: echo "PR Lifecycle event: ${{ github.event.action }}"
+            - name: PR Title
+              run: echo "PR Title: ${{ github.event.pull_request.title }}"
+            - name: PR Author
+              run: echo "PR Author: ${{ github.event.pull_request.user.login }}"
+            - name: Print source and current branch
+              run: |
+                echo "Source Branch : ${{ github.head_ref }}"
+                echo "Current Branch : ${GITHUB_REF##*/}"
