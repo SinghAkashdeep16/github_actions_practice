@@ -1,0 +1,36 @@
+name: PR CHECKS
+
+on:
+    pull_request:
+        branches:
+            - main
+jobs: 
+    file-size-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkouts code
+              uses: actions/checkout@v4
+            - name: Fails if file > 1 mb
+              uses: ./
+              with:
+                max_size: 1048576
+                fail_on_large_files: 'true'
+    branch-name-check:
+        runs-on: ubuntu-latest
+        steps: 
+            - name: Read branch name
+              run: |
+                BRANCH="${{ github.head_ref }}"
+                if [[ ! "$BRANCH" =~ ^(feature|fix|docs)/ ]]; then
+                    echo "bad branch name"
+                    exit 1
+                fi            
+    pr-body-check:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Pr-body checks
+              run: |
+                msg="${{ github.event.pull_request.body }}"
+                if [ -z "$msg" ]; then
+                    echo "Warning"
+                fi
