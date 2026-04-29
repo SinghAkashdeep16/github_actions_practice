@@ -1,0 +1,17 @@
+name: Smart Triggers
+
+on:
+  push:
+    branches:
+      - main
+      - 'release/*'
+    paths:
+      - 'src/**'
+      - 'app/**'
+
+jobs:
+  smart-trigger-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Print trigger info
+        run: echo "Triggered by ${{ github.event_name }} on ${{ github.ref }}"
