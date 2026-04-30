@@ -3,7 +3,6 @@ name: Reusable – Build and Test
 on:
   workflow_call:
     inputs:
-      
       python_version:
         required: true
         type: string
@@ -12,7 +11,6 @@ on:
         type: boolean
         default: true
     outputs:
-   
       test_result:
         description: "Result of the test run: passed or failed"
         value: ${{ jobs.build.outputs.test_result }}
@@ -21,10 +19,15 @@ jobs:
   build:
     runs-on: ubuntu-latest
     outputs:
-    
       test_result: ${{ steps.set_outputs.outputs.test_result }}
 
+
+    defaults:
+      run:
+        working-directory: ./Task-Manager
+
     steps:
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -34,17 +37,18 @@ jobs:
           python-version: ${{ inputs.python_version }}
 
       - name: Install dependencies
+     
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
       - name: Run tests
-    
+
         if: ${{ inputs.run_tests }}
         run: pytest tests/
 
       - name: Set output
-        
+     
         id: set_outputs
         if: always()
         run: |
