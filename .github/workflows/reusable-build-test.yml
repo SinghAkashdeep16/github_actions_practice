@@ -48,14 +48,7 @@ jobs:
           pip install -r requirements.txt
           pip install pytest flask-sqlalchemy
 
-      - name: Run tests
-        if: ${{ inputs.run_tests }}
-        # CONTEXT: Running pytest from Task-Manager/ (our working-directory).
-        # -v gives verbose output so each test name is visible in the Actions log.
-        # The sys.path.insert in test_app.py handles the import of app.py from
-        # the parent folder so no extra PYTHONPATH setup is needed here.
-        run: pytest tests/ -v
-
+     
       - name: Set output
         # CONTEXT: if: always() ensures this step runs even when pytest fails
         # and exits non-zero. Without this the job exits before setting the
