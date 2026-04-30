@@ -1,4 +1,4 @@
-name: health-check
+name: Health Check
 
 on:
   workflow_dispatch:
@@ -9,40 +9,50 @@ jobs:
   health-check:
     runs-on: ubuntu-latest
     steps:
-      - name: Pull Docker image
-        run: docker pull nginx:latest
+      - name: Checkout code
+        # CONTEXT: Checkout needed here so we can build the Task-Manager image
+        # from the actual Dockerfile in the repo rather than pulling a generic image.
+        uses: actions/checkout@v3
 
-      - name: Run nginx container
-        run: docker run -d -p 8080:80 --name nginx-test nginx:latest
+      - name: Build Task-Manager image locally
+        # CONTEXT: Building from Task-Manager/ subfolder where the Dockerfile lives.
+        # We build locally for the health check rather than pulling from Docker Hub
+        # so this works even before the first push to Docker Hub.
+        run: docker build -t task-manager:health-check ./Task-Manager
+
+      - name: Run Task-Manager container
+        run: docker run -d -p 5000:5000 --name task-manager-test task-manager:health-check
 
       - name: Wait for container to be ready
+      
         run: sleep 5
 
       - name: Health check
       
         run: |
-          response=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:8080)
+          response=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:5000)
           echo "HTTP response: $response"
-          # Save result to env so the summary step can access it
           if [ "$response" -eq 200 ]; then
             echo "HEALTH_STATUS=PASSED" >> $GITHUB_ENV
-            echo "Health check passed: $response"
+            echo "Health check passed!"
           else
             echo "HEALTH_STATUS=FAILED" >> $GITHUB_ENV
-            echo "Health check failed: $response"
+            echo "Health check failed with status: $response"
             exit 1
           fi
 
       - name: Stop and remove container
+     
         if: always()
         run: |
-          docker stop nginx-test
-          docker rm nginx-test
+          docker stop task-manager-test
+          docker rm task-manager-test
 
       - name: Create summary report
+      
         if: always()
         run: |
           echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
-          echo "- Image: nginx:latest" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: task-manager:health-check" >> $GITHUB_STEP_SUMMARY
           echo "- Status: $HEALTH_STATUS" >> $GITHUB_STEP_SUMMARY
           echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY

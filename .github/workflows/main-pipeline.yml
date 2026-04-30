@@ -9,17 +9,17 @@ jobs:
   call-build:
     uses: ./.github/workflows/reusable-build-test.yml
     with:
-      python_version: "3.8"
+      python_version: "3.10"
       run_tests: true
     secrets: inherit
 
   call-docker:
-    
+  
     needs: [call-build]
     uses: ./.github/workflows/reusable-docker.yml
     with:
-   
-      image_name: "yourdockerhubusername/myapp"
+    
+      image_name: "akashjaura16/task-manager"
     
       tag: "sha-${{ github.sha }}"
     secrets:
@@ -30,8 +30,10 @@ jobs:
 
     needs: [call-docker]
     runs-on: ubuntu-latest
+ 
+
     steps:
       - name: Print deploy info
-       
+        
         run: |
           echo "Deploying image: ${{ needs.call-docker.outputs.image_url }} to production"
