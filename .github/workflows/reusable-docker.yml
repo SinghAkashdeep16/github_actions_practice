@@ -1,0 +1,54 @@
+name: Reusable – Docker Build and Push
+
+on:
+  workflow_call:
+    inputs:
+     
+      image_name:
+        required: true
+        type: string
+      tag:
+        required: true
+        type: string
+    secrets:
+      DOCKER_USERNAME:
+        required: true
+      DOCKER_TOKEN:
+        required: true
+    outputs:
+
+      image_url:
+        description: "Full Docker image path including tag"
+        value: ${{ jobs.build.outputs.image_url }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+     
+      image_url: ${{ steps.set_outputs.outputs.image_url }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Log in to Docker Hub
+        # FIX: Updated action version from v1 to v3 (v1 is deprecated).
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build and push Docker image
+       
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          
+          tags: ${{ inputs.image_name }}:${{ inputs.tag }}
+
+      - name: Set output
+        
+        id: set_outputs
+        run: echo "image_url=${{ inputs.image_name }}:${{ inputs.tag }}" >> $GITHUB_OUTPUT

@@ -1,0 +1,48 @@
+name: health-check
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */12 * * *'
+
+jobs:
+  health-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pull Docker image
+        run: docker pull nginx:latest
+
+      - name: Run nginx container
+        run: docker run -d -p 8080:80 --name nginx-test nginx:latest
+
+      - name: Wait for container to be ready
+        run: sleep 5
+
+      - name: Health check
+      
+        run: |
+          response=$(curl -o /dev/null -s -w "%{http_code}" http://localhost:8080)
+          echo "HTTP response: $response"
+          # Save result to env so the summary step can access it
+          if [ "$response" -eq 200 ]; then
+            echo "HEALTH_STATUS=PASSED" >> $GITHUB_ENV
+            echo "Health check passed: $response"
+          else
+            echo "HEALTH_STATUS=FAILED" >> $GITHUB_ENV
+            echo "Health check failed: $response"
+            exit 1
+          fi
+
+      - name: Stop and remove container
+        if: always()
+        run: |
+          docker stop nginx-test
+          docker rm nginx-test
+
+      - name: Create summary report
+        if: always()
+        run: |
+          echo "## Health Check Report" >> $GITHUB_STEP_SUMMARY
+          echo "- Image: nginx:latest" >> $GITHUB_STEP_SUMMARY
+          echo "- Status: $HEALTH_STATUS" >> $GITHUB_STEP_SUMMARY
+          echo "- Time: $(date)" >> $GITHUB_STEP_SUMMARY
