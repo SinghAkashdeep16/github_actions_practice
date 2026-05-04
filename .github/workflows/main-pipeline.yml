@@ -5,6 +5,9 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   call-build:
     uses: ./.github/workflows/reusable-build-test.yml
@@ -14,26 +17,35 @@ jobs:
     secrets: inherit
 
   call-docker:
-  
     needs: [call-build]
     uses: ./.github/workflows/reusable-docker.yml
     with:
-    
       image_name: "akashjaura16/task-manager"
-    
       tag: "sha-${{ github.sha }}"
     secrets:
       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
       DOCKER_TOKEN: ${{ secrets.DOCKER_TOKEN }}
 
-  deploy:
-
+  trivy-scan:
+    name: Scan Docker Image for Vulnerabilities
     needs: [call-docker]
     runs-on: ubuntu-latest
- 
+    steps:
+      - name: Pull image for scanning
+        run: docker pull akashjaura16/task-manager:sha-${{ github.sha }}
 
+      - name: Run Trivy vulnerability scanner
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: "akashjaura16/task-manager:sha-${{ github.sha }}"
+          format: "table"
+          exit-code: "1"
+          severity: "CRITICAL,HIGH"
+
+  deploy:
+    needs: [trivy-scan]
+    runs-on: ubuntu-latest
     steps:
       - name: Print deploy info
-        
         run: |
-          echo "Deploying image: ${{ needs.call-docker.outputs.image_url }} to production"
+          echo "Deploying image: akashjaura16/task-manager:sha-${{ github.sha }} to production"
