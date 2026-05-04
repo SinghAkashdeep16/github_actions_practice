@@ -1,17 +1,14 @@
-FROM python:3.9-slim
-
+FROM python:3.13-slim
 WORKDIR /app
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get upgrade -y && apt-get install -y \
     gcc \
     python3-dev \
     && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
-
 EXPOSE 5000
-
 CMD ["python", "app.py"]
